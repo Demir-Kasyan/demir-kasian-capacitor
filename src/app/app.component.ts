@@ -1,10 +1,60 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { GoogleMap } from '@capacitor/google-maps';
+
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'demir-kasian-capacitor';
+export class AppComponent implements AfterViewInit {
+  private readonly apiKey = 'AIzaSyAa80Cmb6FvWcYzz9RhLoHG-E6UhlfA4yw'; //DONT WORK :(, cause need to create billing account in google maps console or smth.
+  @ViewChild('map') mapRef: ElementRef<HTMLElement> = {} as ElementRef;
+  private map: GoogleMap | any; //bruh 'any'
+  constructor(){
+  }
+  ngAfterViewInit(): void {
+    this.configureMap();
+  }
+
+  async configureMap(): Promise<void> {
+    this.map = await GoogleMap.create({
+      id: 'map',
+      element: this.mapRef.nativeElement,
+      apiKey: this.apiKey,
+      config: {
+        center: {
+          lat: 33.6,
+          lng: -117.9,
+        },
+        zoom: 8,
+      },
+    });
+    await this.map.addMarkers(
+      [
+        {
+          coordinate: {
+          lat: 33.6,
+          lng: -117.9,
+          },
+          title: 'Hello ArboStar <3!',
+        },
+        {
+          coordinate: {
+          lat: 33.0,
+          lng: -117.9,
+          },
+          title: 'More!',
+        },
+        {
+          coordinate: {
+          lat: 32.6,
+          lng: -117.9,
+          },
+          title: 'We need more!',
+        }
+      ]
+    );
+  }
 }
+// AIzaSyAa80Cmb6FvWcYzz9RhLoHG-E6UhlfA4yw
