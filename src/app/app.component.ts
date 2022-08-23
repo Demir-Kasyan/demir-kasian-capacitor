@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { GoogleMap } from '@capacitor/google-maps';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -8,9 +9,10 @@ import { GoogleMap } from '@capacitor/google-maps';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements AfterViewInit {
-  private readonly apiKey = 'AIzaSyAa80Cmb6FvWcYzz9RhLoHG-E6UhlfA4yw'; //DONT WORK :(, cause need to create billing account in google maps console or smth.
+  private readonly apiKey = environment.api_key;
+
   @ViewChild('map') mapRef: ElementRef<HTMLElement> = {} as ElementRef;
-  private map: GoogleMap | any; //bruh 'any'
+  private map: GoogleMap = {} as GoogleMap;
   constructor(){
   }
   ngAfterViewInit(): void {
@@ -57,4 +59,3 @@ export class AppComponent implements AfterViewInit {
     );
   }
 }
-// AIzaSyAa80Cmb6FvWcYzz9RhLoHG-E6UhlfA4yw
